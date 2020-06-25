@@ -76,8 +76,8 @@ const sortedWhenSubArrayIsSorted = (a: number[]) => {
 	}
 
 	// find min and max of a[start...end]
-	let max = Number.MAX_VALUE;
-	let min = Number.MIN_VALUE;
+	let max = Number.MIN_VALUE;
+	let min = Number.MAX_VALUE;
 
 	for (let k = start; k <= end; k++) {
 		if (a[k] > max) {
@@ -98,7 +98,7 @@ const sortedWhenSubArrayIsSorted = (a: number[]) => {
 		end++;
 	}
 
-	return [ start, end ];
+	return { indexes: [ start, end ], arr: a.slice(start, end + 1) };
 };
 
 console.log(`
