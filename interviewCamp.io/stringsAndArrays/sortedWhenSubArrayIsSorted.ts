@@ -50,7 +50,7 @@
 // 	return a.slice(lBound, rBound);
 // };
 
-const sortedWhenSubArrayIsSorted = (a: number[]) => {
+export const sortedWhenSubArrayIsSorted = (a: number[]) => {
 	if (!a.length || !a) return null;
 
 	let start = 0;
@@ -100,21 +100,3 @@ const sortedWhenSubArrayIsSorted = (a: number[]) => {
 
 	return [ start, end ];
 };
-
-console.log(`
-  given: [ 1,2,4,5,3,5,6,7 ]
-  expect: [ 4,5,3 ]
-  result: ${JSON.stringify(sortedWhenSubArrayIsSorted([ 1, 2, 4, 5, 3, 5, 6, 7 ]))}
-`);
-
-console.log(`
-  given: [1,3,5,2,6,4,7,8,9]
-  expect: [3,5,2,6,4]
-  result: ${JSON.stringify(sortedWhenSubArrayIsSorted([ 1, 3, 5, 2, 6, 4, 7, 8, 9 ]))}
-`);
-
-console.log(`
-  given: [1,2,4,5,3,7,5,6,8]
-  expect: [4,5,3,7,5,6]
-  result: ${JSON.stringify(sortedWhenSubArrayIsSorted([ 1, 2, 4, 5, 3, 7, 5, 6, 8 ]))}
-`);
