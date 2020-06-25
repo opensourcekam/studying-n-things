@@ -5,6 +5,9 @@
   "repository": "git@github.com:opensourcekam/algo-ds.git",
   "author": "Kameron Robinson <kamdroidr@me.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
   "dependencies": {
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.49",
