@@ -50,53 +50,68 @@
 // 	return a.slice(lBound, rBound);
 // };
 
-export const sortedWhenSubArrayIsSorted = (a: number[]) => {
-	if (!a.length || !a) return null;
+export const sortedWhenSubArrayIsSorted = (nums: number[]) => {
+	if (isSorted(nums)) return null;
 
-	let start = 0;
-	let end = a.length - 1;
+	const dipNdx = findDipNdxFromStart(nums);
+	const bumpNdx = findBumpNdxFromEnd(nums);
 
-	// find dip in value
-	for (start = 0; start < a.length - 1; start++) {
-		if (a[start + 1] < a[start]) {
-			break;
-		}
-	}
+	const slice = nums.slice(dipNdx, bumpNdx + 1);
+	const min = Math.min(...slice);
+	const max = Math.max(...slice);
 
-	// no dip found
-	if (start === a.length - 1) {
-		return null;
-	}
+	const startNdx = expandStartNdxToMin(nums, dipNdx, min);
+	const endNdx = expandEndNdxToMax(nums, bumpNdx, max);
 
-	//find bump in values
-	for (end = a.length - 1; end > 0; end--) {
-		if (a[end - 1] > a[end]) {
-			break;
-		}
-	}
-
-	// find min and max of a[start...end]
-	let max = Number.MIN_VALUE;
-	let min = Number.MAX_VALUE;
-
-	for (let k = start; k <= end; k++) {
-		if (a[k] > max) {
-			max = a[k];
-		}
-
-		if (a[k] < min) {
-			min = a[k];
-		}
-	}
-
-	//expand start and end outward
-	while (start > 0 && a[start - 1] > min) {
-		start--;
-	}
-
-	while (end < a.length - 1 && a[end + 1] < max) {
-		end++;
-	}
-
-	return { indexes: [ start, end ], arr: a.slice(start, end + 1) };
+	return nums.slice(startNdx, endNdx + 1);
 };
+
+const isSorted = (nums: number[]): boolean => {
+	if (nums.length <= 1) {
+		return true;
+	}
+	for (let ndx = 1; ndx < nums.length; ndx++) {
+		const prev = nums[ndx - 1];
+		const curr = nums[ndx];
+		if (prev > curr) {
+			return false;
+		}
+	}
+	return true;
+}
+
+const findDipNdxFromStart = (unsortedNums: number[]): number => {
+	for (let ndx = 0; ndx < unsortedNums.length - 1; ndx++) {
+		const curr = unsortedNums[ndx];
+		const next = unsortedNums[ndx + 1];
+		if (next < curr) {
+			return ndx;
+		}
+	}
+	throw new Error('expected unsorted number array');
+}
+
+const findBumpNdxFromEnd = (unsortedNums: number[]): number => {
+	for (let ndx = unsortedNums.length - 1; ndx > 0; ndx--) {
+		const prev = unsortedNums[ndx - 1];
+		const curr = unsortedNums[ndx];
+		if (prev > curr) {
+			return ndx;
+		}
+	}
+	throw new Error('expected unsorted number array');
+}
+
+const expandStartNdxToMin = (nums: number[], startNdx: number, min: number) => {
+	while (startNdx > 0 && nums[startNdx - 1] > min) {
+		startNdx--;
+	}
+	return startNdx;
+}
+
+const expandEndNdxToMax = (nums: number[], endNdx: number, max: number) => {
+	while (endNdx < nums.length - 1 && nums[endNdx + 1] < max) {
+		endNdx++;
+	}
+	return endNdx;
+}
