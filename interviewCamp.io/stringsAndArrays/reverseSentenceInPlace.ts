@@ -8,6 +8,8 @@
  * Later on, we show how to solve it more efficiently in Week 3's Special Tricks section.
  *  */
 
+import { swap } from '../utils';
+
 /**
  * EQSCV
  * 
@@ -27,12 +29,6 @@
  *   we can assume the middle item does not need to be swapped i.e. if there are 5 items - a b c d e => e d [c] b a -- c stays in place
  * 
  */
-
-const swap = (a: string[], start: number, end: number) => {
-	const temp = a[start];
-	a[start] = a[end];
-	a[end] = temp;
-};
 
 // allocating no memory and doing solution in O(n) time
 const reverseSentenceInPlace = (sentence: string, seperator = ' ') => {
